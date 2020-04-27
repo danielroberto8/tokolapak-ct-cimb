@@ -4,6 +4,24 @@
       "username": "seto",
       "password": "password",
       "id": 1
+    },
+    {
+      "username": "aa",
+      "password": "aa",
+      "role": "user",
+      "id": 2
+    },
+    {
+      "username": "bb",
+      "password": "bb",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "username": "cc",
+      "password": "cc",
+      "role": "user",
+      "id": 4
     }
   ]
 }

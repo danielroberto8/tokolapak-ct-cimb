@@ -56,10 +56,14 @@ class Navbar extends React.Component {
           <CircleBg>
             <small style={{ color: "#3C64B1", fontWeight: "bold" }}>4</small>
           </CircleBg> */}
-          <ButtonUI className="mr-3" type="textual">
-            Sign in
-          </ButtonUI>
-          <ButtonUI type="contained">Sign up</ButtonUI>
+          <Link to="/auth/login">
+            <ButtonUI className="mr-3" type="textual">
+              Sign in
+            </ButtonUI>
+          </Link>
+          <Link to="/auth/register">
+            <ButtonUI type="contained">Sign up</ButtonUI>
+          </Link>
         </div>
       </div>
     );

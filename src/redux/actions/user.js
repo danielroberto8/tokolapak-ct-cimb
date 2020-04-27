@@ -3,9 +3,21 @@ import { API_URL } from "../../constants/API";
 import Cookie from "universal-cookie";
 import userTypes from "../types/user";
 
-const { ON_LOGIN_FAIL, ON_LOGIN_SUCCESS, ON_LOGOUT_SUCCESS } = userTypes;
+const {
+  ON_USER_INPUT,
+  ON_LOGIN_FAIL,
+  ON_LOGIN_SUCCESS,
+  ON_LOGOUT_SUCCESS,
+} = userTypes;
 
 const cookieObj = new Cookie();
+
+export const userInputHandler = (text) => {
+  return {
+    type: ON_USER_INPUT,
+    payload: text,
+  };
+};
 
 export const loginHandler = (userData) => {
   return (dispatch) => {
@@ -24,7 +36,6 @@ export const loginHandler = (userData) => {
             payload: res.data[0],
           });
         } else {
-          alert("masuk");
           dispatch({
             type: ON_LOGIN_FAIL,
             payload: "Username atau password salah",

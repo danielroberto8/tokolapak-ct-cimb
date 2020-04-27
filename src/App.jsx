@@ -15,7 +15,7 @@ class App extends React.Component {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/auth" component={AuthScreen} />
+          <Route exact path="/auth/:type" component={AuthScreen} />
         </Switch>
         <div style={{ height: "120px" }} />
       </>

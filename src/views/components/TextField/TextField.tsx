@@ -30,17 +30,12 @@ class TextField extends React.Component<TextFieldProps> {
         value={this.props.value}
         onChange={this.props.onChange}
         placeholder={this.props.placeholder}
-<<<<<<< HEAD
         type={this.props.type}
-=======
-        type={this.props.type || "text"}
->>>>>>> f86fce85423ff90d22cec77cbdd6f8e9a566db3e
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         className={`custom-text-input ${
           this.state.searchBarIsFocused ? "active" : null
         } ${this.props.className}`}
-        value={this.props.value}
       />
     );
   }

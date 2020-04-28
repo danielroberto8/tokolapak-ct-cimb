@@ -227,13 +227,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-<<<<<<< HEAD
   loginHandler: loginHandler,
   registerHandler: registerHandler,
-=======
-  onRegister: registerHandler,
-  onLogin: loginHandler,
->>>>>>> f86fce85423ff90d22cec77cbdd6f8e9a566db3e
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

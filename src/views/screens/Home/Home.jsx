@@ -2,7 +2,6 @@ import React from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
-import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShippingFast,
@@ -146,7 +145,7 @@ class Home extends React.Component {
 
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
-      return <ProductCard className="m-2" />;
+      return <ProductCard className="m-2" data={val} />;
     });
   };
 

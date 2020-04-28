@@ -16,6 +16,7 @@ const init_state = {
   address: {},
   role: "",
   errMsg: "",
+  isLogged: false,
 };
 
 export default (state = init_state, action) => {
@@ -31,6 +32,7 @@ export default (state = init_state, action) => {
         fullName,
         role,
         id,
+        isLogged: true,
       };
     case ON_LOGIN_FAIL:
       swal("Oops...", action.payload, "error");
@@ -39,7 +41,7 @@ export default (state = init_state, action) => {
       swal("Oops...", action.payload, "error");
       return { ...state, errMsg: action.payload };
     case ON_LOGOUT_SUCCESS:
-      return { ...init_state };
+      return { ...init_state, isLogged: false };
     default:
       return { ...state };
   }

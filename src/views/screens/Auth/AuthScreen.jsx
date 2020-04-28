@@ -5,26 +5,46 @@ import swal from "sweetalert";
 import { loginHandler, registerHandler } from "../../../redux/actions";
 import TextField from "../../components/TextField/TextField";
 import ButtonUI from "../../components/Button/Button";
+import Cookie from "universal-cookie";
+
+const cookieObject = new Cookie();
 
 class AuthScreen extends React.Component {
+  //rombak state!
   state = {
-    users: "",
     usernameLogin: "",
     passwordLogin: "",
+    showPasswordLogin: false,
     usernameRegis: "",
+    emailRegis: "",
     passwordRegis: "",
+    showPasswordRegis: false,
     passwordConfirm: "",
   };
+
+  componentDidUpdate() {
+    if (this.props.user.username != "") {
+      cookieObject.set("authData", JSON.stringify(this.props.user));
+    }
+  }
 
   inputHandler = (e, field) => {
     this.setState({ [field]: e.target.value });
   };
 
-  checkPassword = (pass, passconfirm) => {
-    if (pass == passconfirm) {
-      return true;
-    }
-    return false;
+  // checkPassword = (pass, passconfirm) => {
+  //   if (pass == passconfirm) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
+
+  checkBoxHandler = (e, field) => {
+    const { checked } = e.target;
+
+    this.setState({
+      [field]: checked,
+    });
   };
 
   clearState = () => {
@@ -59,16 +79,16 @@ class AuthScreen extends React.Component {
 
   register = () => {
     const { usernameRegis, passwordRegis, passwordConfirm } = this.state;
-    if (usernameRegis == "" || passwordRegis == "" || passwordConfirm == "") {
+    if (usernameRegis == "" || passwordRegis == "") {
       return swal(
         "Oops...",
         "Form tidak boleh ada yang kosong hyung",
         "warning"
       );
     }
-    if (!this.checkPassword(passwordRegis, passwordConfirm)) {
-      return swal("Oops...", "Password tidak cucok", "error");
-    }
+    // if (!this.checkPassword(passwordRegis, passwordConfirm)) {
+    //   return swal("Oops...", "Password tidak cucok", "error");
+    // }
 
     const userData = {
       username: usernameRegis,
@@ -95,19 +115,29 @@ class AuthScreen extends React.Component {
                 <TextField
                   placeholder="Username"
                   className="mt-5"
+                  value={this.state.usernameLogin}
                   onChange={(e) => {
                     this.inputHandler(e, "usernameLogin");
                   }}
-                  value={this.state.usernameLogin}
                 />
                 <TextField
                   placeholder="Password"
                   className="mt-2"
+                  value={this.state.passwordLogin}
+                  type={this.state.showPasswordLogin ? "text" : "password"}
                   onChange={(e) => {
                     this.inputHandler(e, "passwordLogin");
                   }}
-                  value={this.state.passwordLogin}
                 />
+                <input
+                  type="checkbox"
+                  className="mt-3"
+                  name="showPasswordLogin"
+                  onChange={(e) => {
+                    this.checkBoxHandler(e, "showPasswordLogin");
+                  }}
+                />{" "}
+                Tampilkan password
                 <div className="d-flex justify-content-center">
                   <ButtonUI type="contained" className="mt-4" func={this.login}>
                     Login
@@ -130,24 +160,45 @@ class AuthScreen extends React.Component {
                 <TextField
                   placeholder="Username"
                   className="mt-5"
+                  value={this.state.usernameRegis}
                   onChange={(e) => {
                     this.inputHandler(e, "usernameRegis");
                   }}
                 />
                 <TextField
+                  placeholder="Email"
+                  className="mt-2"
+                  type="email"
+                  // onChange={(e) => {
+                  //   this.inputHandler(e, "usernameRegis");
+                  // }}
+                />
+                <TextField
                   placeholder="Password"
                   className="mt-2"
+                  value={this.state.passwordRegis}
+                  type={this.state.showPasswordRegis ? "text" : "password"}
                   onChange={(e) => {
                     this.inputHandler(e, "passwordRegis");
                   }}
                 />
-                <TextField
+                {/* <TextField
                   placeholder="Confirm Password"
                   className="mt-2"
+                  value={this.state.passwordConfirm}
                   onChange={(e) => {
                     this.inputHandler(e, "passwordConfirm");
                   }}
-                />
+                /> */}
+                <input
+                  type="checkbox"
+                  className="mt-3"
+                  name="showPasswordRegis"
+                  onChange={(e) => {
+                    this.checkBoxHandler(e, "showPasswordRegis");
+                  }}
+                />{" "}
+                Tampilkan password
                 <div className="d-flex justify-content-center">
                   <ButtonUI
                     type="contained"
@@ -175,7 +226,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  loginHandler,
-  registerHandler,
-})(AuthScreen);
+const mapDispatchToProps = {
+  loginHandler: loginHandler,
+  registerHandler: registerHandler,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { logoutHandler } from "../../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
 
@@ -46,28 +48,54 @@ class Navbar extends React.Component {
           />
         </div>
         <div className="d-flex flex-row align-items-center">
-          {/* <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
-          <p className="small ml-3 mr-4">Profile</p>
-          <FontAwesomeIcon
-            className="mr-2"
-            icon={faShoppingCart}
-            style={{ fontSize: 24 }}
-          />
-          <CircleBg>
-            <small style={{ color: "#3C64B1", fontWeight: "bold" }}>4</small>
-          </CircleBg> */}
-          <Link to="/auth/login">
-            <ButtonUI className="mr-3" type="textual">
-              Sign in
-            </ButtonUI>
-          </Link>
-          <Link to="/auth/register">
-            <ButtonUI type="contained">Sign up</ButtonUI>
-          </Link>
+          {this.props.user.id ? (
+            <>
+              <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
+              <p className="small ml-3 mr-4">{this.props.user.username}</p>
+              <Link to="/cart">
+                <FontAwesomeIcon
+                  className="mr-2"
+                  icon={faShoppingCart}
+                  style={{ fontSize: 24 }}
+                />
+                {/* <CircleBg>
+                  <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                    4
+                  </small>
+                </CircleBg> */}
+              </Link>
+              <Link to="/auth/login">
+                <ButtonUI
+                  className="ml-3"
+                  type="textual"
+                  func={this.props.logoutHandler}
+                >
+                  Logout
+                </ButtonUI>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/auth/login">
+                <ButtonUI className="mr-3" type="textual">
+                  Sign in
+                </ButtonUI>
+              </Link>
+              <Link to="/auth/register">
+                <ButtonUI type="contained">Sign up</ButtonUI>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     );
   }
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, { logoutHandler })(Navbar);

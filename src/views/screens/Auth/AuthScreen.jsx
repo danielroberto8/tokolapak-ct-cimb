@@ -101,7 +101,7 @@ class AuthScreen extends React.Component {
   };
 
   render() {
-    if (this.props.match.params.type == "login") {
+    if (this.props.match.params.type == "login" && !this.props.user.isLogged) {
       return (
         <div className="container">
           <div className="row mt-5">
@@ -149,7 +149,10 @@ class AuthScreen extends React.Component {
           </div>
         </div>
       );
-    } else if (this.props.match.params.type == "register") {
+    } else if (
+      this.props.match.params.type == "register" &&
+      !this.props.user.isLogged
+    ) {
       return (
         <div className="container">
           <div className="row mt-5">

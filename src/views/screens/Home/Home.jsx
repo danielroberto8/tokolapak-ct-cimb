@@ -11,6 +11,7 @@ import {
 import "./Home.css";
 
 import ProductCard from "../../components/Cards/ProductCard";
+import ProductDetails from "../ProductDetails/ProductDetails";
 
 import iPhoneX from "../../../assets/images/Showcase/iPhone-X.png";
 import iPhone8 from "../../../assets/images/Showcase/iPhone-8.png";
@@ -43,7 +44,7 @@ const dummy = [
     image: iPadPro,
     desc: `
     iPad Pro baru telah didesain ulang seutuhnya dan dilengkapi dengan teknologi Apple yang paling canggih. Ini akan membuat Anda berpikir ulang apa yang iPad mampu lakukan`,
-    id: 2,
+    id: 3,
   },
 ];
 
@@ -68,7 +69,9 @@ class Home extends React.Component {
 
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
-      return <ProductCard className="m-2" />;
+      return (
+        <ProductCard key={`bestseller-${val.id}`} data={val} className="m-2" />
+      );
     });
   };
 

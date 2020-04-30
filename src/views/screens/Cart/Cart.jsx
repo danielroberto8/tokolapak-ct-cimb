@@ -10,6 +10,7 @@ class Cart extends React.Component {
   state = {
     cartId: [],
     productList: [],
+    init: true,
   };
 
   loadData = () => {
@@ -79,10 +80,6 @@ class Cart extends React.Component {
         swal("Your imaginary file is safe!");
       }
     });
-    this.setState({
-      productList: [],
-    });
-    this.loadData();
   };
 
   renderCart = () => {
@@ -125,7 +122,7 @@ class Cart extends React.Component {
       return (
         <div className="container">
           <h3 className="text-center">This is your cart</h3>
-          {this.state.productList.length > 0 ? (
+          {this.state.productList.length > 0 || this.state.init ? (
             <>{this.renderCart()}</>
           ) : (
             <div className="text-center">

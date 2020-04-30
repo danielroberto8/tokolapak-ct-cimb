@@ -8,9 +8,9 @@
       "id": 1
     },
     {
-      "username": "aa",
-      "password": "aa",
-      "role": "user",
+      "username": "admin",
+      "password": "admin",
+      "role": "admin",
       "email": "aa@gmail.com",
       "id": 2
     },
@@ -34,6 +34,12 @@
       "role": "user",
       "email": "daniel@gmail.com",
       "id": 5
+    },
+    {
+      "username": "danielroberto8",
+      "password": "danielkasep",
+      "role": "user",
+      "id": 6
     }
   ],
   "products": [
@@ -60,21 +66,17 @@
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
       "desc": "HP Terbaikk loh",
       "id": 3
+    },
+    {
+      "productName": "Xiaomi Redmi Note 7",
+      "price": "2150000",
+      "category": "Phone",
+      "image": "https://download.appmifile.com/933_updatepdf_in/28/02/2019/8b118dd0-dd89-4b5d-9edc-032157e3dcd9.png",
+      "desc": "Hp paling manteb di muka bumi",
+      "id": 4
     }
   ],
   "cart": [
-    {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 1
-    },
-    {
-      "userId": 2,
-      "productId": 3,
-      "quantity": 1,
-      "id": 2
-    },
     {
       "userId": 1,
       "productId": 1,

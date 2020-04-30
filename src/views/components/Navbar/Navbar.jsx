@@ -58,12 +58,12 @@ class Navbar extends React.Component {
                   icon={faShoppingCart}
                   style={{ fontSize: 24 }}
                 />
-                {/* <CircleBg>
+              </Link>
+              {/* <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
                     4
                   </small>
                 </CircleBg> */}
-              </Link>
               <Link to="/auth/login">
                 <ButtonUI
                   className="ml-3"

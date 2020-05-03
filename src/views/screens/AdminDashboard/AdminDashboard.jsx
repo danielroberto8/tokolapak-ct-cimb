@@ -1,6 +1,7 @@
 import React from "react";
 import Axios from "axios";
-import { Table, Button } from "reactstrap";
+import "./AdminDashboard.css";
+import { Collapse, Button } from "reactstrap";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
@@ -12,7 +13,7 @@ class AdminDashboard extends React.Component {
     createForm: {
       id: 0,
       productName: "",
-      price: 0,
+      price: "",
       category: "Phone",
       image: "",
       desc: "",
@@ -20,11 +21,13 @@ class AdminDashboard extends React.Component {
     editForm: {
       id: 0,
       productName: "",
-      price: 0,
+      price: "",
       category: "Phone",
       image: "",
       desc: "",
     },
+    activeProducts: [],
+    onEdit: false,
   };
 
   componentDidMount = () => {
@@ -45,6 +48,9 @@ class AdminDashboard extends React.Component {
 
   inputHandler = (e, field, form) => {
     const { value } = e.target;
+    if (field === "price") {
+      parseInt(value);
+    }
     this.setState({
       [form]: {
         ...this.state[form],
@@ -59,7 +65,7 @@ class AdminDashboard extends React.Component {
         this.setState({
           createForm: {
             productName: "",
-            price: 0,
+            price: "",
             category: "Phone",
             image: "",
             desc: "",
@@ -111,7 +117,13 @@ class AdminDashboard extends React.Component {
         <tr>
           <td> {id} </td>
           <td> {productName} </td>
-          <td> {price} </td>
+          <td>
+            {" "}
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(price)}{" "}
+          </td>
           <td> {category} </td>
           <td>
             {" "}
@@ -126,6 +138,9 @@ class AdminDashboard extends React.Component {
             <ButtonUI
               type="contained"
               func={() => {
+                this.setState({
+                  onEdit: true,
+                });
                 this.editBtnHandler(idx);
               }}
             >
@@ -143,154 +158,160 @@ class AdminDashboard extends React.Component {
   render() {
     return (
       <div className="container py-4">
-        <Table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Image</th>
-              <th>Description</th>
-              <th colSpan="2" className="text-center">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>{this.renderProductList()}</tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={2}>
-                <TextField
-                  value={this.state.editForm.productName}
-                  placeholder="product name"
-                  onChange={(e) => {
-                    this.inputHandler(e, "productName", "editForm");
-                  }}
-                />
-              </td>
-              <td>
-                <TextField
-                  value={this.state.editForm.price}
-                  placeholder="price"
-                  onChange={(e) => {
-                    this.inputHandler(e, "price", "editForm");
-                  }}
-                />
-              </td>
-              <td colSpan={2}>
-                <select
-                  className="form-control"
-                  value={this.state.editForm.category}
-                  onChange={(e) => {
-                    this.inputHandler(e, "category", "editForm");
-                  }}
-                >
-                  <option value="Phone">Phone</option>
-                  <option value="Laptop">Laptop</option>
-                  <option value="Tab">Tab</option>
-                  <option value="Desktop">Desktop</option>
-                </select>
-              </td>
-              <td>
-                <TextField
-                  value={this.state.editForm.image}
-                  placeholder="image link"
-                  onChange={(e) => {
-                    this.inputHandler(e, "image", "editForm");
-                  }}
-                />
-              </td>
-              <td colSpan={2}>
-                <TextField
-                  value={this.state.editForm.desc}
-                  placeholder="produk desc"
-                  onChange={(e) => {
-                    this.inputHandler(e, "desc", "editForm");
-                  }}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={7}></td>
-              <td colSpan={1}>
-                <ButtonUI
-                  type="contained"
-                  func={() => {
-                    this.editProductHandler();
-                  }}
-                >
-                  save
-                </ButtonUI>
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={2}>
-                <TextField
-                  value={this.state.createForm.productName}
-                  placeholder="product name"
-                  onChange={(e) => {
-                    this.inputHandler(e, "productName", "createForm");
-                  }}
-                />
-              </td>
-              <td>
-                <TextField
-                  value={this.state.createForm.price}
-                  placeholder="price"
-                  onChange={(e) => {
-                    this.inputHandler(e, "price", "createForm");
-                  }}
-                />
-              </td>
-              <td colSpan={2}>
-                <select
-                  className="form-control"
-                  value={this.state.createForm.category}
-                  onChange={(e) => {
-                    this.inputHandler(e, "category", "createForm");
-                  }}
-                >
-                  <option value="Phone">Phone</option>
-                  <option value="Laptop">Laptop</option>
-                  <option value="Tab">Tab</option>
-                  <option value="Desktop">Desktop</option>
-                </select>
-              </td>
-              <td>
-                <TextField
-                  value={this.state.createForm.image}
-                  placeholder="image link"
-                  onChange={(e) => {
-                    this.inputHandler(e, "image", "createForm");
-                  }}
-                />
-              </td>
-              <td colSpan={2}>
-                <TextField
-                  value={this.state.createForm.desc}
-                  placeholder="produk desc"
-                  onChange={(e) => {
-                    this.inputHandler(e, "desc", "createForm");
-                  }}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={7}></td>
-              <td colSpan={1}>
-                <ButtonUI
-                  type="contained"
-                  func={() => {
-                    this.createProductHandler();
-                  }}
-                >
-                  Create
-                </ButtonUI>
-              </td>
-            </tr>
-          </tfoot>
-        </Table>
+        <div className="dashboard">
+          <caption className="p-3">
+            <h2>Products</h2>
+          </caption>
+          <table className="dashboard-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>category</th>
+                <th>image</th>
+                <th>description</th>
+                <th className="text-center" colSpan="2">
+                  actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>{this.renderProductList()}</tbody>
+            {!this.state.onEdit ? (
+              <tfoot>
+                <tr>
+                  <td colSpan={2}>
+                    <TextField
+                      value={this.state.createForm.productName}
+                      onChange={(e) =>
+                        this.inputHandler(e, "productName", "createForm")
+                      }
+                      placeholder="Name"
+                    />
+                  </td>
+                  <td>
+                    <TextField
+                      value={this.state.createForm.price}
+                      onChange={(e) =>
+                        this.inputHandler(e, "price", "createForm")
+                      }
+                      placeholder="Price"
+                    />
+                  </td>
+                  <td colSpan={2}>
+                    <select
+                      value={this.state.createForm.category}
+                      onChange={(e) =>
+                        this.inputHandler(e, "category", "createForm")
+                      }
+                      className="form-control"
+                    >
+                      <option value="Phone">Phone</option>
+                      <option value="Laptop">Laptop</option>
+                      <option value="Tab">Tab</option>
+                      <option value="Desktop">Desktop</option>
+                    </select>
+                  </td>
+                  <td>
+                    <TextField
+                      value={this.state.createForm.image}
+                      onChange={(e) =>
+                        this.inputHandler(e, "image", "createForm")
+                      }
+                      placeholder="Image"
+                    />
+                  </td>
+                  <td colSpan={2}>
+                    <TextField
+                      value={this.state.createForm.desc}
+                      onChange={(e) =>
+                        this.inputHandler(e, "desc", "createForm")
+                      }
+                      placeholder="Description"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={7}></td>
+                  <td colSpan={1}>
+                    <ButtonUI func={this.createProductHandler} type="contained">
+                      Create
+                    </ButtonUI>
+                  </td>
+                </tr>
+              </tfoot>
+            ) : (
+              <tfoot>
+                <tr>
+                  <td colSpan={2}>
+                    <TextField
+                      value={this.state.editForm.productName}
+                      onChange={(e) =>
+                        this.inputHandler(e, "productName", "editForm")
+                      }
+                      placeholder="Name"
+                    />
+                  </td>
+                  <td>
+                    <TextField
+                      value={this.state.editForm.price}
+                      onChange={(e) =>
+                        this.inputHandler(e, "price", "editForm")
+                      }
+                      placeholder="Price"
+                    />
+                  </td>
+                  <td colSpan={2}>
+                    <select
+                      value={this.state.editForm.category}
+                      onChange={(e) =>
+                        this.inputHandler(e, "category", "editForm")
+                      }
+                      className="form-control"
+                    >
+                      <option value="Phone">Phone</option>
+                      <option value="Laptop">Laptop</option>
+                      <option value="Tab">Tab</option>
+                      <option value="Desktop">Desktop</option>
+                    </select>
+                  </td>
+                  <td>
+                    <TextField
+                      value={this.state.editForm.image}
+                      onChange={(e) =>
+                        this.inputHandler(e, "image", "editForm")
+                      }
+                      placeholder="Image"
+                    />
+                  </td>
+                  <td colSpan={2}>
+                    <TextField
+                      value={this.state.editForm.desc}
+                      onChange={(e) => this.inputHandler(e, "desc", "editForm")}
+                      placeholder="Description"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={7}></td>
+                  <td colSpan={1}>
+                    <ButtonUI
+                      func={() => {
+                        this.setState({
+                          onEdit: false,
+                        });
+                        this.editProductHandler();
+                      }}
+                      type="contained"
+                    >
+                      Save
+                    </ButtonUI>
+                  </td>
+                </tr>
+              </tfoot>
+            )}
+          </table>
+        </div>
       </div>
     );
   }

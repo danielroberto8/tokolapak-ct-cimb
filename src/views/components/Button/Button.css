@@ -2,6 +2,8 @@
   --accent-default: #3c64b1;
   --accent-dark: #1e4693;
   --accent-light: #5a82cf;
+  --accent-green: #4caf50;
+  --accent-red: #f44336;
 }
 
 .custom-btn {
@@ -66,4 +68,32 @@
 
 .custom-btn-textual:active {
   color: var(--accent-dark);
+}
+
+.custom-btn-circular {
+  border-radius: 64px;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid var(--accent-default);
+  color: var(--accent-dark);
+}
+
+.custom-btn-circular:hover {
+  border-radius: 64px;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid var(--accent-light);
+  color: var(--accent-light);
+}
+
+.custom-btn-danger {
+  border: 1px solid var(--accent-red);
+  background-color: white;
+  color: var(--accent-red);
+}
+
+.custom-btn-danger:hover {
+  border: 1px solid var(--accent-red);
+  background-color: var(--accent-red);
+  color: white;
 }

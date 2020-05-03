@@ -18,6 +18,7 @@ const init_state = {
   errMsg: "",
   isLogged: false,
   cookieChecked: false,
+  searchTerm: "",
 };
 
 export default (state = init_state, action) => {
@@ -44,6 +45,8 @@ export default (state = init_state, action) => {
       return { ...state, errMsg: action.payload, cookieChecked: true };
     case ON_LOGOUT_SUCCESS:
       return { ...init_state, isLogged: false, cookieChecked: true };
+    case "ON_USER_SEARCH":
+      return { ...init_state, searchTerm: action.payload, cookieChecked: true };
     case "COOKIE_CHECK":
       return { ...init_state, cookieChecked: true };
     default:

@@ -69,25 +69,78 @@
     },
     {
       "productName": "Xiaomi Redmi Note 7",
-      "price": "2150000",
+      "price": 2150000,
       "category": "Phone",
       "image": "https://download.appmifile.com/933_updatepdf_in/28/02/2019/8b118dd0-dd89-4b5d-9edc-032157e3dcd9.png",
       "desc": "Hp paling manteb di muka bumi",
       "id": 4
-    }
-  ],
-  "cart": [
-    {
-      "userId": 1,
-      "productId": 1,
-      "quantity": 1,
-      "id": 3
     },
     {
+      "id": 5,
+      "productName": "iMac",
+      "price": 34600000,
+      "category": "Desktop",
+      "image": "https://www.apple.com/v/imac/i/images/specs/display_retina_27in__c9pba53sihkm_large_2x.jpg",
+      "desc": "Desktop seharga Nmax"
+    },
+    {
+      "id": 6,
+      "productName": "Blackberry Gemini",
+      "price": 200000,
+      "category": "Phone",
+      "image": "https://ecs7.tokopedia.net/img/cache/700/product-1/2017/1/25/1008612/1008612_e4bcd7fd-3ef1-45ca-9e69-271d3f1aca6c.jpg",
+      "desc": "Hape jadul"
+    }
+  ],
+  "cart": [],
+  "transaction": [
+    {
       "userId": 1,
-      "productId": 2,
-      "quantity": 1,
-      "id": 4
+      "status": "unpaid",
+      "date": "03/05/2020",
+      "itemList": [
+        {
+          "productId": 3,
+          "productName": "Macbook Pro",
+          "quantity": 3,
+          "price": 20000000
+        }
+      ],
+      "id": 1
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "status": "paid",
+      "date": "03/05/2020",
+      "itemList": [
+        {
+          "productId": 4,
+          "productName": "Xiaomi Redmi Note 7",
+          "quantity": 1,
+          "price": 2150000
+        }
+      ]
+    },
+    {
+      "userId": 2,
+      "status": "unpaid",
+      "date": "03/05/2020",
+      "itemList": [
+        {
+          "productId": 5,
+          "productName": "iMac",
+          "quantity": 1,
+          "price": 34600000
+        },
+        {
+          "productId": 6,
+          "productName": "Blackberry Gemini",
+          "quantity": 1,
+          "price": 200000
+        }
+      ],
+      "id": 3
     }
   ]
 }

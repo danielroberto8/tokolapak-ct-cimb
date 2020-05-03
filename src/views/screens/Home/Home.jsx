@@ -8,10 +8,11 @@ import {
   faMoneyBillWave,
   faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+
 import "./Home.css";
 
 import ProductCard from "../../components/Cards/ProductCard";
-import ProductDetails from "../ProductDetails/ProductDetails";
 
 import iPhoneX from "../../../assets/images/Showcase/iPhone-X.png";
 import iPhone8 from "../../../assets/images/Showcase/iPhone-8.png";
@@ -53,6 +54,7 @@ class Home extends React.Component {
     activeIndex: 0,
     animating: false,
     bestSellerData: [],
+    category: "",
   };
 
   getBestSellerData = () => {
@@ -69,9 +71,34 @@ class Home extends React.Component {
 
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
-      return (
-        <ProductCard key={`bestseller-${val.id}`} data={val} className="m-2" />
-      );
+      const category = this.state.category;
+      if (val.productName.toLowerCase().includes(this.props.user.searchTerm)) {
+        if (category != "") {
+          if (val.category === category) {
+            return (
+              <ProductCard
+                key={`bestseller-${val.id}`}
+                data={val}
+                className="m-2"
+              />
+            );
+          }
+        } else {
+          return (
+            <ProductCard
+              key={`bestseller-${val.id}`}
+              data={val}
+              className="m-2"
+            />
+          );
+        }
+      }
+    });
+  };
+
+  setCategory = (key) => {
+    this.setState({
+      category: key,
     });
   };
 
@@ -136,64 +163,111 @@ class Home extends React.Component {
     this.setState({ activeIndex: prevIndex });
   };
 
-  getBestSellerData = () => {
-    Axios.get(`${API_URL}/products`)
-      .then((res) => {
-        this.setState({ bestSellerData: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // getBestSellerData = () => {
+  //   Axios.get(`${API_URL}/products`)
+  //     .then((res) => {
+  //       this.setState({ bestSellerData: res.data });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  renderProducts = () => {
-    return this.state.bestSellerData.map((val) => {
-      return <ProductCard className="m-2" data={val} />;
-    });
-  };
+  // renderProducts = () => {
+  //   return this.state.bestSellerData.map((val) => {
+  //     return <ProductCard className="m-2" data={val} />;
+  //   });
+  // };
 
-  componentDidMount() {
-    this.getBestSellerData();
-  }
+  // componentDidMount() {
+  //   this.getBestSellerData();
+  // }
 
   render() {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
           <Link to="/" style={{ color: "inherit" }}>
-            <h6 className="mx-4 font-weight-bold">PHONE</h6>
+            <h6
+              onClick={() => {
+                this.setCategory("");
+              }}
+              className="mx-4 font-weight-bold"
+            >
+              ALL
+            </h6>
           </Link>
           <Link to="/" style={{ color: "inherit" }}>
-            <h6 className="mx-4 font-weight-bold">LAPTOP</h6>
+            <h6
+              onClick={() => {
+                this.setCategory("Phone");
+              }}
+              className="mx-4 font-weight-bold"
+            >
+              PHONE
+            </h6>
           </Link>
           <Link to="/" style={{ color: "inherit" }}>
-            <h6 className="mx-4 font-weight-bold">TAB</h6>
+            <h6
+              onClick={() => {
+                this.setCategory("Laptop");
+              }}
+              className="mx-4 font-weight-bold"
+            >
+              LAPTOP
+            </h6>
           </Link>
           <Link to="/" style={{ color: "inherit" }}>
-            <h6 className="mx-4 font-weight-bold">DESKTOP</h6>
+            <h6
+              onClick={() => {
+                this.setCategory("Tablet");
+              }}
+              className="mx-4 font-weight-bold"
+            >
+              TAB
+            </h6>
+          </Link>
+          <Link to="/" style={{ color: "inherit" }}>
+            <h6
+              onClick={() => {
+                this.setCategory("Desktop");
+              }}
+              className="mx-4 font-weight-bold"
+            >
+              DESKTOP
+            </h6>
           </Link>
         </div>
-        <Carousel
-          className="carousel-item-home-bg "
-          next={this.nextHandler}
-          previous={this.prevHandler}
-          activeIndex={this.state.activeIndex}
-        >
-          {this.renderCarouselItems()}
-          <CarouselControl
-            directionText="Previous"
-            direction="prev"
-            onClickHandler={this.prevHandler}
-          />
-          <CarouselControl
-            directionText="Next"
-            direction="next"
-            onClickHandler={this.nextHandler}
-          />
-        </Carousel>
+        {!this.props.user.searchTerm ? (
+          <>
+            <Carousel
+              className="carousel-item-home-bg "
+              next={this.nextHandler}
+              previous={this.prevHandler}
+              activeIndex={this.state.activeIndex}
+            >
+              {this.renderCarouselItems()}
+              <CarouselControl
+                directionText="Previous"
+                direction="prev"
+                onClickHandler={this.prevHandler}
+              />
+              <CarouselControl
+                directionText="Next"
+                direction="next"
+                onClickHandler={this.nextHandler}
+              />
+            </Carousel>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="container">
           {/* BEST SELLER SECTION */}
-          <h2 className="text-center font-weight-bolder mt-5">BEST SELLER</h2>
+          <h2 className="text-center font-weight-bolder mt-5">
+            {this.state.category ? this.state.category : "Best Seller"}
+          </h2>
           <div className="row d-flex flex-wrap justify-content-center">
             {this.renderProducts()}
           </div>
@@ -252,4 +326,10 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

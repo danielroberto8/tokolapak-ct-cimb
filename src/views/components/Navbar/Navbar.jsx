@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { logoutHandler, onSearch } from "../../../redux/actions";
+import { logoutHandler, searchHandler } from "../../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -31,7 +31,7 @@ class Navbar extends React.Component {
     this.setState({
       searchBarInput: res,
     });
-    this.props.onSearch(res);
+    this.props.searchHandler(res);
   };
 
   onFocus = () => {
@@ -83,30 +83,53 @@ class Navbar extends React.Component {
                   <p className="small ml-3 mr-4">{this.props.user.username}</p>
                 </DropdownToggle>
                 <DropdownMenu className="mt-2">
-                  <DropdownItem>
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to="/dashboard"
-                    >
-                      Dashboard
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem>
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to=""
-                    >
-                      Members
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem>
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to="/payment"
-                    >
-                      Payments
-                    </Link>
-                  </DropdownItem>
+                  {this.props.user.role === "admin" ? (
+                    <>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/dashboard"
+                        >
+                          Dashboard
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to=""
+                        >
+                          Members
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/payment"
+                        >
+                          Payments
+                        </Link>
+                      </DropdownItem>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/"
+                        >
+                          Wishlist
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/"
+                        >
+                          History
+                        </Link>
+                      </DropdownItem>
+                    </>
+                  )}
                 </DropdownMenu>
               </Dropdown>
               <Link to="/cart">
@@ -152,7 +175,10 @@ class Navbar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    search: state.search,
   };
 };
 
-export default connect(mapStateToProps, { logoutHandler, onSearch })(Navbar);
+export default connect(mapStateToProps, { logoutHandler, searchHandler })(
+  Navbar
+);

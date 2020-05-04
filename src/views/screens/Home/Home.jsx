@@ -72,7 +72,9 @@ class Home extends React.Component {
   renderProducts = () => {
     return this.state.bestSellerData.map((val) => {
       const category = this.state.category;
-      if (val.productName.toLowerCase().includes(this.props.user.searchTerm)) {
+      if (
+        val.productName.toLowerCase().includes(this.props.search.searchTerm)
+      ) {
         if (category != "") {
           if (val.category === category) {
             return (
@@ -238,7 +240,7 @@ class Home extends React.Component {
             </h6>
           </Link>
         </div>
-        {!this.props.user.searchTerm ? (
+        {!this.props.search.searchTerm ? (
           <>
             <Carousel
               className="carousel-item-home-bg "
@@ -329,6 +331,7 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    search: state.search,
   };
 };
 

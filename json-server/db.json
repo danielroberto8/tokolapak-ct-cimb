@@ -92,7 +92,14 @@
       "desc": "Hape jadul"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 1
+    }
+  ],
   "transaction": [
     {
       "userId": 1,

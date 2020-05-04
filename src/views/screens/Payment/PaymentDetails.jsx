@@ -77,7 +77,10 @@ class PaymentDetails extends React.Component {
   };
 
   render() {
-    if (this.state.transList.userId === this.props.user.id) {
+    if (
+      this.state.transList.userId === this.props.user.id ||
+      this.state.transList.userId === ""
+    ) {
       return (
         <div className="container text-center">
           <h2>Payment Details</h2>

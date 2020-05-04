@@ -52,13 +52,34 @@ class Cart extends React.Component {
   addCart = (cartId) => {
     let cartTemp = [];
     for (let i = 0; i < this.state.cartList.length; i++) {
-      if (this.state.cartList[i].id == cartId) {
-        cartTemp = this.state.cartList[i];
-        break;
+      cartTemp.push(this.state.cartList[i]);
+      if (cartTemp[i].id == cartId) {
+        cartTemp[i].quantity += 1;
       }
     }
-    const { id, userId, productId, quantity } = cartTemp;
-    Axios.put(`${API_URL}/cart/${cartId}`, {
+    this.setState({
+      cartList: cartTemp,
+    });
+    this.modifyCartDatabase(cartTemp);
+  };
+
+  reduceCart = (cartId) => {
+    let cartTemp = [];
+    for (let i = 0; i < this.state.cartList.length; i++) {
+      cartTemp.push(this.state.cartList[i]);
+      if (cartTemp[i].id == cartId) {
+        cartTemp[i].quantity -= 1;
+      }
+    }
+    this.setState({
+      cartList: cartTemp,
+    });
+    this.modifyCartDatabase(cartTemp);
+  };
+
+  modifyCartDatabase = (cart) => {
+    const { id, userId, productId, quantity } = cart;
+    Axios.put(`${API_URL}/cart/${id}`, {
       id,
       userId,
       productId,
@@ -70,37 +91,6 @@ class Cart extends React.Component {
           productList: [],
         });
         this.loadData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  reduceCart = (cartId) => {
-    let cartTemp = [];
-    for (let i = 0; i < this.state.cartList.length; i++) {
-      if (this.state.cartList[i].id == cartId) {
-        cartTemp = this.state.cartList[i];
-        break;
-      }
-    }
-    const { id, userId, productId, quantity } = cartTemp;
-    Axios.put(`${API_URL}/cart/${cartId}`, {
-      id,
-      userId,
-      productId,
-      quantity: quantity - 1,
-    })
-      .then((res) => {
-        if (quantity < 2) {
-          this.deleteCart(cartId);
-        } else {
-          this.setState({
-            cartList: [],
-            productList: [],
-          });
-          this.loadData();
-        }
       })
       .catch((err) => {
         console.log(err);

@@ -2,7 +2,6 @@ import Axios from "axios";
 import { API_URL } from "../../constants/API";
 import Cookie from "universal-cookie";
 import userTypes from "../types/user";
-import user from "../types/user";
 
 const {
   ON_USER_INPUT,

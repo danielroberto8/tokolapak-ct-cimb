@@ -121,6 +121,19 @@ export const onSearch = (term) => {
   };
 };
 
+export const onCartChange = (value) => {
+  return {
+    type: "ON_CART_CHANGE",
+    payload: value,
+  };
+};
+
+export const onCartDelete = () => {
+  return {
+    type: "ON_CART_DELETE",
+  };
+};
+
 export const cookieChecker = () => {
   return {
     type: "COOKIE_CHECK",

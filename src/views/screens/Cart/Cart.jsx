@@ -3,6 +3,7 @@ import Axios from "axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { API_URL } from "../../../constants/API";
+import { onCartChange, onCartDelete } from "../../../redux/actions";
 import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
 
@@ -10,6 +11,17 @@ class Cart extends React.Component {
   state = {
     cartList: [],
     productList: [],
+    delivery: "Instant",
+  };
+
+  inputHandler = (e) => {
+    this.setState({
+      delivery: e.target.value,
+    });
+  };
+
+  componentDidMount = () => {
+    this.loadData();
   };
 
   loadData = () => {
@@ -24,10 +36,6 @@ class Cart extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  componentDidMount = () => {
-    this.loadData();
   };
 
   fillCart = (val) => {
@@ -52,34 +60,13 @@ class Cart extends React.Component {
   addCart = (cartId) => {
     let cartTemp = [];
     for (let i = 0; i < this.state.cartList.length; i++) {
-      cartTemp.push(this.state.cartList[i]);
-      if (cartTemp[i].id == cartId) {
-        cartTemp[i].quantity += 1;
+      if (this.state.cartList[i].id == cartId) {
+        cartTemp = this.state.cartList[i];
+        break;
       }
     }
-    this.setState({
-      cartList: cartTemp,
-    });
-    this.modifyCartDatabase(cartTemp);
-  };
-
-  reduceCart = (cartId) => {
-    let cartTemp = [];
-    for (let i = 0; i < this.state.cartList.length; i++) {
-      cartTemp.push(this.state.cartList[i]);
-      if (cartTemp[i].id == cartId) {
-        cartTemp[i].quantity -= 1;
-      }
-    }
-    this.setState({
-      cartList: cartTemp,
-    });
-    this.modifyCartDatabase(cartTemp);
-  };
-
-  modifyCartDatabase = (cart) => {
-    const { id, userId, productId, quantity } = cart;
-    Axios.put(`${API_URL}/cart/${id}`, {
+    const { id, userId, productId, quantity } = cartTemp;
+    Axios.put(`${API_URL}/cart/${cartId}`, {
       id,
       userId,
       productId,
@@ -91,6 +78,37 @@ class Cart extends React.Component {
           productList: [],
         });
         this.loadData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  reduceCart = (cartId) => {
+    let cartTemp = [];
+    for (let i = 0; i < this.state.cartList.length; i++) {
+      if (this.state.cartList[i].id == cartId) {
+        cartTemp = this.state.cartList[i];
+        break;
+      }
+    }
+    const { id, userId, productId, quantity } = cartTemp;
+    Axios.put(`${API_URL}/cart/${cartId}`, {
+      id,
+      userId,
+      productId,
+      quantity: quantity - 1,
+    })
+      .then((res) => {
+        if (quantity < 2) {
+          this.deleteCart(cartId);
+        } else {
+          this.setState({
+            cartList: [],
+            productList: [],
+          });
+          this.loadData();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -151,8 +169,7 @@ class Cart extends React.Component {
   checkOutHandler = () => {
     swal({
       title: "Sudah selesai belanja?",
-      text:
-        "Keranjangmu akan kembali kosong jika kamu sudah melakukan check-out",
+      text: `Total belanja adalah Rp. sekian dengan pengiriman ${this.state.delivery}`,
       icon: "warning",
       buttons: true,
     }).then((willCheckOut) => {
@@ -169,7 +186,10 @@ class Cart extends React.Component {
         Axios.post(`${API_URL}/transaction`, {
           userId: this.props.user.id,
           status: "unpaid",
-          date: this.getDate(),
+          purchaseDate: this.getDate(),
+          confirmationDate: "",
+          totalPayment: 0,
+          delivery: this.state.delivery,
           itemList: [...arrCart],
         })
           .then((res) => {
@@ -179,12 +199,13 @@ class Cart extends React.Component {
               }
             });
             this.setState({
+              delivery: "",
               cartList: [],
               productList: [],
             });
             swal(
               "Check out berhasil!",
-              "terima kasih sudah berbelanja di tokolapak",
+              "Silahkan buka history anda untuk memeriksa status transaksi",
               "success"
             );
           })
@@ -274,6 +295,32 @@ class Cart extends React.Component {
           {this.state.productList.length > 0 || this.state.init ? (
             <>
               {this.renderCart()}
+              <div className="row mt-5">
+                <div className="col-lg-6 col-md-6 col-12">
+                  <h4 className="text-right">Delivery options : </h4>
+                </div>
+                <div className="col-lg-6 col-md-6 col-12">
+                  <select
+                    value={this.state.delivery}
+                    className="custom-text-input h-100 pl-3 form-control"
+                    style={{ width: "300px" }}
+                    onChange={(e) => this.inputHandler(e)}
+                  >
+                    <option value="Instant">
+                      Instant (3-6 jam) Rp.100.000.00
+                    </option>
+                    <option value="Same day">
+                      Same day (1 hari) Rp.50.000.00
+                    </option>
+                    <option value="Express">
+                      Express (2-3 hari) Rp.20.000.00
+                    </option>
+                    <option value="Economy">
+                      Economy (Tungguin aja) Gratis
+                    </option>
+                  </select>
+                </div>
+              </div>
               <center>
                 <ButtonUI
                   className="mt-5"
@@ -304,4 +351,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, { onCartChange, onCartDelete })(Cart);

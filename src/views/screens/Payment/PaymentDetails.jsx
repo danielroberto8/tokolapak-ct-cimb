@@ -33,17 +33,22 @@ class PaymentDetails extends React.Component {
     return sum;
   };
 
-  payBill = () => {
-    const { id, userId, status, date, itemList } = this.state.transList;
-    Axios.put(`${API_URL}/transaction/${this.props.match.params.transId}`, {
-      id,
-      userId,
-      status: "paid",
-      date,
-      itemList,
+  getDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+
+    return (today = dd + "/" + mm + "/" + yyyy);
+  };
+
+  confirmBill = () => {
+    Axios.patch(`${API_URL}/transaction/${this.props.match.params.transId}`, {
+      confirmationDate: this.getDate(),
+      status: "Confirmed",
     })
       .then((res) => {
-        swal("Yeay!", "Thank you for your purchase", "success");
+        swal("Confirmed!", "purchase have been confirmed", "success");
         return <Redirect to="/payment" />;
       })
       .catch((err) => {
@@ -78,7 +83,7 @@ class PaymentDetails extends React.Component {
 
   render() {
     if (
-      this.state.transList.userId === this.props.user.id ||
+      this.props.user.role === "admin" ||
       this.state.transList.userId === ""
     ) {
       return (
@@ -108,11 +113,10 @@ class PaymentDetails extends React.Component {
                 <tr>
                   <td colSpan="3"></td>
                   <td colSpan="2" className="d-flex justify-content-center">
-                    <ButtonUI func={this.payBill} className="mr-2">
+                    <ButtonUI func={this.confirmBill} className="mr-2">
                       {" "}
-                      Pay
+                      Confirm
                     </ButtonUI>
-                    <ButtonUI className="ml-2"> cancel</ButtonUI>
                   </td>
                 </tr>
               ) : (

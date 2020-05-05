@@ -16,9 +16,9 @@ class Payment extends React.Component {
   };
 
   loadPaymentList = () => {
-    Axios.get(`${API_URL}/transaction`, {
+    Axios.get(`${API_URL}/transaction?_expand=user`, {
       params: {
-        userId: this.props.user.id,
+        status: "Waiting for confirmation",
       },
     })
       .then((res) => {
@@ -31,11 +31,13 @@ class Payment extends React.Component {
 
   renderPaymentList = () => {
     return this.state.paymentList.map((val) => {
+      const { id, purchaseDate, status, user } = val;
       return (
         <tr>
-          <td>{val.id}</td>
-          <td>{val.date}</td>
-          <td>{val.status}</td>
+          <td>{id}</td>
+          <td>{user.username}</td>
+          <td>{purchaseDate}</td>
+          <td>{status}</td>
           <td>
             <Link to={`/payment/details/${val.id}`}>
               <ButtonUI type="textual">Details</ButtonUI>
@@ -53,6 +55,7 @@ class Payment extends React.Component {
         <table className="dashboard-table mt-5">
           <thead>
             <th>Transaction Id</th>
+            <th>Username</th>
             <th>Date</th>
             <th>Status</th>
             <th>Action</th>

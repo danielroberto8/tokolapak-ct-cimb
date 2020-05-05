@@ -44,7 +44,7 @@
   ],
   "products": [
     {
-      "productName": "iPhone 7 Plus",
+      "productName": "iPhone 7 +",
       "price": 5000000,
       "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
@@ -92,34 +92,55 @@
       "desc": "Hape jadul"
     }
   ],
-  "cart": [
-    {
-      "userId": 1,
-      "productId": 2,
-      "quantity": 1,
-      "id": 1
-    }
-  ],
+  "cart": [],
   "transaction": [
     {
       "userId": 1,
-      "status": "unpaid",
-      "date": "03/05/2020",
+      "status": "Confirmed",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "05/05/2020",
+      "totalPayment": 15050000,
+      "delivery": "Same day",
       "itemList": [
         {
-          "productId": 3,
-          "productName": "Macbook Pro",
+          "productId": 1,
+          "productName": "iPhone 7 +",
           "quantity": 3,
-          "price": 20000000
+          "price": 5000000
         }
       ],
       "id": 1
     },
     {
-      "id": 2,
       "userId": 1,
-      "status": "paid",
-      "date": "03/05/2020",
+      "status": "Confirmed",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "05/05/2020",
+      "totalPayment": 20400000,
+      "delivery": "Economy",
+      "itemList": [
+        {
+          "productId": 3,
+          "productName": "Macbook Pro",
+          "quantity": 1,
+          "price": 20000000
+        },
+        {
+          "productId": 6,
+          "productName": "Blackberry Gemini",
+          "quantity": 2,
+          "price": 200000
+        }
+      ],
+      "id": 2
+    },
+    {
+      "userId": 1,
+      "status": "Waiting for confirmation",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 2200000,
+      "delivery": "Same day",
       "itemList": [
         {
           "productId": 4,
@@ -127,27 +148,59 @@
           "quantity": 1,
           "price": 2150000
         }
-      ]
+      ],
+      "id": 3
     },
     {
-      "userId": 2,
-      "status": "unpaid",
-      "date": "03/05/2020",
+      "userId": 1,
+      "status": "Waiting for confirmation",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 34650000,
+      "delivery": "Same day",
       "itemList": [
         {
           "productId": 5,
           "productName": "iMac",
           "quantity": 1,
           "price": 34600000
-        },
-        {
-          "productId": 6,
-          "productName": "Blackberry Gemini",
-          "quantity": 1,
-          "price": 200000
         }
       ],
-      "id": 3
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "status": "Waiting for confirmation",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 20100000,
+      "delivery": "Instant",
+      "itemList": [
+        {
+          "productId": 3,
+          "productName": "Macbook Pro",
+          "quantity": 1,
+          "price": 20000000
+        }
+      ],
+      "id": 5
+    },
+    {
+      "userId": 3,
+      "status": "Confirmed",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "05/05/2020",
+      "totalPayment": 45020000,
+      "delivery": "Express",
+      "itemList": [
+        {
+          "productId": 2,
+          "productName": "iPad Pro 3",
+          "quantity": 3,
+          "price": 15000000
+        }
+      ],
+      "id": 6
     }
   ]
 }

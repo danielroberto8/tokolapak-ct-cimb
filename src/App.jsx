@@ -15,6 +15,12 @@ import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/AdminDashboard/AdminDashboard";
 import PaymentDetails from "./views/screens/Payment/PaymentDetails";
 import Payment from "./views/screens/Payment/Payment";
+import Member from "./views/screens/Members/Member";
+import Wishlist from "./views/screens/Wishlist/Wishlist";
+import History from "./views/screens/History/History";
+import HistoryDetails from "./views/screens/History/HistoryDetails";
+import PathNotFound from "./views/screens/NotFound/PathNotFound";
+import Report from "./views/screens/Report/Report";
 
 const cookieObj = new Cookie();
 
@@ -29,7 +35,35 @@ class App extends React.Component {
 
   renderAdminRoutes() {
     if (this.props.user.role === "admin") {
-      return <Route exact path="/dashboard" component={AdminDashboard} />;
+      return (
+        <>
+          <Route exact path="/dashboard" component={AdminDashboard} />
+          <Route exact path="/member" component={Member} />
+          <Route exact path="/report" component={Report} />
+          <Route exact path="/payment" component={Payment} />
+          <Route
+            exact
+            path="/payment/details/:transId"
+            component={PaymentDetails}
+          />
+        </>
+      );
+    }
+  }
+
+  renderUserRoutes() {
+    if (this.props.user.role === "user") {
+      return (
+        <>
+          <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/history" component={History} />
+          <Route
+            exact
+            path="/history/detail/:transactionId"
+            component={HistoryDetails}
+          />
+        </>
+      );
     }
   }
 
@@ -47,13 +81,9 @@ class App extends React.Component {
               component={ProductDetails}
             />
             <Route exact path="/cart" component={Cart} />
-            <Route exact path="/payment" component={Payment} />
-            <Route
-              exact
-              path="/payment/details/:transId"
-              component={PaymentDetails}
-            />
             {this.renderAdminRoutes()}
+            {this.renderUserRoutes()}
+            <Route path="*" component={PathNotFound} />
           </Switch>
           <div style={{ height: "120px" }} />
         </>

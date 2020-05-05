@@ -16,6 +16,7 @@ const init_state = {
   address: {},
   role: "",
   errMsg: "",
+  cartQty: 0,
   isLogged: false,
   cookieChecked: false,
 };
@@ -44,6 +45,15 @@ export default (state = init_state, action) => {
       return { ...state, errMsg: action.payload, cookieChecked: true };
     case ON_LOGOUT_SUCCESS:
       return { ...init_state, isLogged: false, cookieChecked: true };
+    case "ON_CART_CHANGE":
+      return {
+        ...init_state,
+        cartQty: action.payload,
+        isLogged: true,
+        cookieChecked: true,
+      };
+    case "ON_CART_DELETE":
+      return { ...init_state, cartQty: 0, cookieChecked: true };
     case "COOKIE_CHECK":
       return { ...init_state, cookieChecked: true };
     default:

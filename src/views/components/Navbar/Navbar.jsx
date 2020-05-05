@@ -1,4 +1,5 @@
 import React from "react";
+import Axios from "axios";
 import { connect } from "react-redux";
 import { logoutHandler, searchHandler } from "../../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +15,7 @@ import {
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
+import { API_URL } from "../../../constants/API";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -25,6 +27,30 @@ class Navbar extends React.Component {
     searchBarInput: "",
     dropdownOpen: false,
   };
+
+  // componentDidMount = () => {
+  //   this.loadCartQty();
+  // };
+
+  // loadCartQty = () => {
+  //   Axios.get(`${API_URL}/cart`, {
+  //     params: {
+  //       userId: this.props.user.id,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       let cartQtyTemp = 0;
+  //       res.data.map((val) => {
+  //         cartQtyTemp += val.quantity;
+  //       });
+  //       this.setState({
+  //         cartQty: cartQtyTemp,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   searchBarInputHandler = (e) => {
     const res = e.target.value.toLowerCase();
@@ -71,7 +97,10 @@ class Navbar extends React.Component {
             }}
           />
         </div>
-        <div className="d-flex flex-row align-items-center">
+        <div
+          className="d-flex flex-row align-items-center"
+          style={{ cursor: "pointer" }}
+        >
           {this.props.user.id ? (
             <>
               <Dropdown
@@ -96,7 +125,7 @@ class Navbar extends React.Component {
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
-                          to=""
+                          to="/member"
                         >
                           Members
                         </Link>
@@ -109,13 +138,21 @@ class Navbar extends React.Component {
                           Payments
                         </Link>
                       </DropdownItem>
+                      <DropdownItem>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to="/report"
+                        >
+                          Report
+                        </Link>
+                      </DropdownItem>
                     </>
                   ) : (
                     <>
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
-                          to="/"
+                          to="/wishlist"
                         >
                           Wishlist
                         </Link>
@@ -123,7 +160,7 @@ class Navbar extends React.Component {
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
-                          to="/"
+                          to="/history"
                         >
                           History
                         </Link>
@@ -139,11 +176,11 @@ class Navbar extends React.Component {
                   style={{ fontSize: 24 }}
                 />
               </Link>
-              {/* <CircleBg>
-                  <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    4
-                  </small>
-                </CircleBg> */}
+              <CircleBg>
+                <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                  {this.props.user.cartQty}
+                </small>
+              </CircleBg>
               <Link to="/auth/login">
                 <ButtonUI
                   className="ml-3"

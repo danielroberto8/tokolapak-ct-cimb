@@ -49,7 +49,7 @@
       "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
       "desc": "HP Terbaikk loh",
-      "totalPurchased": "[object Object]1",
+      "totalPurchased": 0,
       "id": 1
     },
     {
@@ -58,7 +58,7 @@
       "category": "Tablet",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
       "desc": "HP Terbaikk loh",
-      "totalPurchased": 10,
+      "totalPurchased": 0,
       "id": 2
     },
     {
@@ -67,7 +67,7 @@
       "category": "Laptop",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
       "desc": "HP Terbaikk loh",
-      "totalPurchased": "[object Object]1",
+      "totalPurchased": 0,
       "id": 3
     },
     {
@@ -94,182 +94,10 @@
       "price": 200000,
       "category": "Phone",
       "image": "https://ecs7.tokopedia.net/img/cache/700/product-1/2017/1/25/1008612/1008612_e4bcd7fd-3ef1-45ca-9e69-271d3f1aca6c.jpg",
-      "totalPurchased": 1,
+      "totalPurchased": 0,
       "desc": "Hape jadul"
     }
   ],
   "cart": [],
-  "transaction": [
-    {
-      "userId": 1,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 20050000,
-      "delivery": "Same day",
-      "itemList": [
-        {
-          "productId": 3,
-          "productName": "Macbook Pro",
-          "quantity": 1,
-          "price": 20000000
-        }
-      ],
-      "id": 1
-    },
-    {
-      "userId": 1,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 5100000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 1,
-          "productName": "iPhone 7 +",
-          "quantity": 1,
-          "price": 5000000
-        }
-      ],
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 30100000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 2,
-          "productName": "iPad Pro 3",
-          "quantity": 2,
-          "price": 15000000
-        }
-      ],
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 300000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 6,
-          "productName": "Blackberry Gemini",
-          "quantity": 1,
-          "price": 200000
-        }
-      ],
-      "id": 4
-    },
-    {
-      "userId": 3,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 75100000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 2,
-          "productName": "iPad Pro 3",
-          "quantity": 5,
-          "price": 15000000
-        }
-      ],
-      "id": 5
-    },
-    {
-      "userId": 4,
-      "status": "Confirmed",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "05/05/2020",
-      "totalPayment": 45100000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 2,
-          "productName": "iPad Pro 3",
-          "quantity": 3,
-          "price": 15000000
-        }
-      ],
-      "id": 6
-    },
-    {
-      "userId": 1,
-      "status": "Waiting for confirmation",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "",
-      "totalPayment": 5100000,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 1,
-          "productName": "iPhone 7 +",
-          "quantity": 1,
-          "price": 5000000
-        }
-      ],
-      "id": 7
-    },
-    {
-      "userId": 1,
-      "status": "unpaid",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "",
-      "totalPayment": 0,
-      "delivery": "Instant",
-      "itemList": [
-        {
-          "productId": 1,
-          "productName": "iPhone 7 +",
-          "quantity": 1,
-          "price": 5000000
-        },
-        {
-          "productId": 2,
-          "productName": "iPad Pro 3",
-          "quantity": 1,
-          "price": 15000000
-        }
-      ],
-      "id": 8
-    },
-    {
-      "userId": 1,
-      "status": "unpaid",
-      "purchaseDate": "05/05/2020",
-      "confirmationDate": "",
-      "totalPayment": 0,
-      "delivery": "Economy",
-      "itemList": [
-        {
-          "productId": 4,
-          "productName": "Xiaomi Redmi Note 7",
-          "quantity": 1,
-          "price": 2150000
-        },
-        {
-          "productId": 5,
-          "productName": "iMac",
-          "quantity": 1,
-          "price": 34600000
-        },
-        {
-          "productId": 6,
-          "productName": "Blackberry Gemini",
-          "quantity": 1,
-          "price": 200000
-        }
-      ],
-      "id": 9
-    }
-  ]
+  "transaction": []
 }

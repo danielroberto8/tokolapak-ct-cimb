@@ -47,18 +47,24 @@ class PaymentDetails extends React.Component {
       confirmationDate: this.getDate(),
       status: "Confirmed",
     })
-      .then((res) => {
+      .then(() => {
         this.state.itemList.map((val) => {
+          let prevTotal = 0;
           Axios.get(`${API_URL}/products`, {
             params: {
               id: val.productId,
             },
           }).then((res) => {
+            prevTotal = parseInt(res.data[0].totalPurchased);
             Axios.patch(`${API_URL}/products/${res.data[0].id}`, {
-              totalPurchased: res.data[0].totalPurchased + val.quantity,
-            }).then((res) => {
-              swal("Confirmed!", "purchase have been confirmed", "success");
-            });
+              totalPurchased: prevTotal + val.quantity,
+            })
+              .then(() => {
+                swal("Confirmed!", "purchase have been confirmed", "success");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           });
         });
       })

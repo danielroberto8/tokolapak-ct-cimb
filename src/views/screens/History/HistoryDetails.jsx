@@ -7,6 +7,7 @@ import swal from "sweetalert";
 
 class HistoryDetails extends React.Component {
   state = {
+    productList: [],
     itemList: [],
     delivery: "",
     status: "",
@@ -23,6 +24,9 @@ class HistoryDetails extends React.Component {
           status: res.data[0].status,
           delivery: res.data[0].delivery,
           itemList: res.data[0].itemList,
+        });
+        this.state.itemList.map((val) => {
+          this.getProductDetails(val.productId);
         });
       })
       .catch((err) => {
@@ -75,12 +79,43 @@ class HistoryDetails extends React.Component {
       });
   };
 
+  getProductDetails = (id) => {
+    Axios.get(`${API_URL}/products`, {
+      params: {
+        id: id,
+      },
+    })
+      .then((res) => {
+        let productList = [...this.state.productList];
+        productList.push(res.data[0]);
+        this.setState({
+          productList,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   renderTransactionDetails = () => {
     return this.state.itemList.map((val) => {
-      const { productName, price, quantity } = val;
+      const { productId, productName, price, quantity } = val;
+      let image = "";
+      let desc = "";
+      for (let i = 0; this.state.productList.length; i++) {
+        if (this.state.productList[i].id === productId) {
+          image = this.state.productList[i].image;
+          desc = this.state.productList[i].desc;
+          break;
+        }
+      }
       return (
         <tr>
+          <td>
+            <img style={{ height: "120px", width: "auto" }} src={image} />
+          </td>
           <td>{productName}</td>
+          <td>{desc}</td>
           <td>
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
@@ -112,6 +147,7 @@ class HistoryDetails extends React.Component {
     const { name, duration, price } = temp;
     return (
       <tr>
+        <td colSpan="2"></td>
         <td>{name}</td>
         <td>{duration}</td>
         <td>
@@ -131,13 +167,15 @@ class HistoryDetails extends React.Component {
         <h1>Transaction {this.props.match.params.transactionId}</h1>
         <table className="table table-hover">
           <thead>
+            <th>image</th>
             <th>Product Name</th>
+            <th>desc</th>
             <th>Price</th>
             <th>Quantity</th>
           </thead>
           <tbody>
             {this.renderTransactionDetails()}
-            <td colSpan="1"></td>
+            <td colSpan="3"></td>
             <td>Sub-total</td>
             <td>
               {new Intl.NumberFormat("id-ID", {
@@ -147,6 +185,7 @@ class HistoryDetails extends React.Component {
             </td>
           </tbody>
           <thead>
+            <th colSpan="2"></th>
             <th>Delivery</th>
             <th>Duration</th>
             <th>Price</th>
@@ -154,7 +193,7 @@ class HistoryDetails extends React.Component {
           <tbody>{this.renderDeliveryDetails()}</tbody>
           <tfoot>
             <tr>
-              <th colSpan="1"></th>
+              <th colSpan="3"></th>
               <th>Total Payment</th>
               <th>
                 {new Intl.NumberFormat("id-ID", {

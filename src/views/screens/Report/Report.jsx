@@ -5,6 +5,7 @@ import { API_URL } from "../../../constants/API";
 class Report extends React.Component {
   state = {
     transactionList: [],
+    productSold: [],
   };
 
   componentDidMount = () => {
@@ -16,6 +17,16 @@ class Report extends React.Component {
       .then((res) => {
         this.setState({
           transactionList: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    Axios.get(`${API_URL}/products`)
+      .then((res) => {
+        this.setState({
+          productSold: res.data,
         });
       })
       .catch((err) => {
@@ -89,6 +100,23 @@ class Report extends React.Component {
     });
   };
 
+  renderProductSold = () => {
+    return this.state.productSold.map((val) => {
+      const { id, productName, totalPurchased } = val;
+      if (totalPurchased > 0) {
+        return (
+          <tr>
+            <td>{id}</td>
+            <td>{productName}</td>
+            <td>{totalPurchased}</td>
+          </tr>
+        );
+      } else {
+        return <></>;
+      }
+    });
+  };
+
   render() {
     return (
       <div className="container text-center  pt-4">
@@ -104,6 +132,17 @@ class Report extends React.Component {
             </tr>
           </thead>
           <tbody>{this.renderUserList()}</tbody>
+        </table>
+        <h1 className="pt-4">Sold Item(s)</h1>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Product Id</th>
+              <th>Product Name</th>
+              <th>Total Sold</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderProductSold()}</tbody>
         </table>
       </div>
     );

@@ -141,6 +141,7 @@ class AdminDashboard extends React.Component {
             category: "Phone",
             image: "",
             desc: "",
+            totalPurchased: 0,
           },
         });
         this.getProductList();

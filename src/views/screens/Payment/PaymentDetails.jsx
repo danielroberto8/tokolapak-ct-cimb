@@ -48,8 +48,19 @@ class PaymentDetails extends React.Component {
       status: "Confirmed",
     })
       .then((res) => {
-        swal("Confirmed!", "purchase have been confirmed", "success");
-        return <Redirect to="/payment" />;
+        this.state.itemList.map((val) => {
+          Axios.get(`${API_URL}/products`, {
+            params: {
+              id: val.productId,
+            },
+          }).then((res) => {
+            Axios.patch(`${API_URL}/products/${res.data[0].id}`, {
+              totalPurchased: res.data[0].totalPurchased + val.quantity,
+            }).then((res) => {
+              swal("Confirmed!", "purchase have been confirmed", "success");
+            });
+          });
+        });
       })
       .catch((err) => {
         swal("Oops...", "Something went wrong", "error");
@@ -109,20 +120,33 @@ class PaymentDetails extends React.Component {
                   }).format(this.showSum())}
                 </th>
               </tr>
-              {this.state.transList.status != "paid" ? (
+              {this.state.transList.status === "Waiting for confirmation" ? (
                 <tr>
                   <td colSpan="3"></td>
                   <td colSpan="2" className="d-flex justify-content-center">
-                    <ButtonUI func={this.confirmBill} className="mr-2">
+                    <ButtonUI
+                      func={() => {
+                        this.confirmBill();
+                      }}
+                      className="mr-2"
+                    >
                       {" "}
                       Confirm
                     </ButtonUI>
                   </td>
                 </tr>
-              ) : (
+              ) : this.state.transList.status === "Confirmed" ? (
                 <tr>
                   <td colspan="4">
                     <h3 className="text-center">Lunas!</h3>
+                  </td>
+                </tr>
+              ) : (
+                <tr>
+                  <td colspan="4">
+                    <h3 className="text-center">
+                      User have not made any payment
+                    </h3>
                   </td>
                 </tr>
               )}

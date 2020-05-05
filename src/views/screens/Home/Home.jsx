@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import { onCartChange } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -57,6 +58,21 @@ class Home extends React.Component {
     category: "",
   };
 
+  componentDidMount = () => {
+    this.getBestSellerData();
+    Axios.get(`${API_URL}/cart`, {
+      params: {
+        userId: this.props.user.id,
+      },
+    })
+      .then((res) => {
+        this.props.onCartChange(res.data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   getBestSellerData = () => {
     Axios.get(`${API_URL}/products`)
       .then((res) => {
@@ -102,10 +118,6 @@ class Home extends React.Component {
     this.setState({
       category: key,
     });
-  };
-
-  componentDidMount = () => {
-    this.getBestSellerData();
   };
 
   renderCarouselItems = () => {
@@ -188,7 +200,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <div className="d-flex justify-content-center flex-row align-items-center my-3">
+        <div className="d-flex justify-content-center flex-row align-items-center mt-3">
           <Link to="/" style={{ color: "inherit" }}>
             <h6
               onClick={() => {
@@ -335,4 +347,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { onCartChange })(Home);

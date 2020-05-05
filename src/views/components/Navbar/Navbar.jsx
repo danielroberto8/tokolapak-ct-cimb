@@ -1,5 +1,4 @@
 import React from "react";
-import Axios from "axios";
 import { connect } from "react-redux";
 import { logoutHandler, searchHandler } from "../../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +14,6 @@ import {
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
-import { API_URL } from "../../../constants/API";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -178,7 +176,7 @@ class Navbar extends React.Component {
               </Link>
               <CircleBg>
                 <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                  {this.props.user.cartQty}
+                  {this.props.cart.cartQty}
                 </small>
               </CircleBg>
               <Link to="/auth/login">
@@ -213,6 +211,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user,
     search: state.search,
+    cart: state.cart,
   };
 };
 

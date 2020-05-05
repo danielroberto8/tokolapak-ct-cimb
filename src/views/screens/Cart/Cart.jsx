@@ -107,6 +107,7 @@ class Cart extends React.Component {
             cartList: [],
             productList: [],
           });
+
           this.loadData();
         }
       })
@@ -118,18 +119,17 @@ class Cart extends React.Component {
   deleteCart = (cartId) => {
     swal({
       title: "Are you sure?",
-      text:
-        "Once deleted, you will not be able to recover this imaginary file!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
         Axios.delete(`${API_URL}/cart/${cartId}`)
-          .then(() => {
+          .then((res) => {
             swal("Poof! Your imaginary file has been deleted!", {
               icon: "success",
             });
+            this.props.onCartDelete();
             this.setState({
               productList: [],
             });
@@ -148,6 +148,7 @@ class Cart extends React.Component {
   };
 
   deleteCartList = (key) => {
+    this.props.onCartDelete();
     Axios.delete(`${API_URL}/cart/${key}`)
       .then((res) => {
         console.log(res);

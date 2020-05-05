@@ -1,10 +1,13 @@
 import React from "react";
 import Axios from "axios";
+import { onCartChange } from "../../../redux/actions";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import ButtonUI from "../../components/Button/Button";
 import { API_URL } from "../../../constants/API";
 import swal from "sweetalert";
+import { stat } from "fs";
+import { faEraser } from "@fortawesome/free-solid-svg-icons";
 
 class ProductDetails extends React.Component {
   state = {
@@ -55,6 +58,7 @@ class ProductDetails extends React.Component {
         })
           .then((res) => {
             swal("Thank you!", "Produk ditambahkan ke keranjang", "success");
+            this.cartChangeHandler(productId);
           })
           .catch((err) => {
             console.log(err);
@@ -68,11 +72,23 @@ class ProductDetails extends React.Component {
           .then((res) => {
             console.log(res);
             swal("Thank you!", "Produk ditambahkan ke keranjang", "success");
+            this.cartChangeHandler(productId);
           })
           .catch((err) => {
             console.log(err);
           });
       }
+    });
+  };
+
+  cartChangeHandler = (productId) => {
+    Axios.get(`${API_URL}/cart`).then((res) => {
+      res.data.map((val) => {
+        if (val.productId === productId) {
+          return;
+        }
+      });
+      this.props.onCartChange(res.data.length);
     });
   };
 
@@ -115,7 +131,8 @@ class ProductDetails extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    cart: state.cart,
   };
 };
 
-export default connect(mapStateToProps)(ProductDetails);
+export default connect(mapStateToProps, { onCartChange })(ProductDetails);

@@ -16,11 +16,7 @@ class Payment extends React.Component {
   };
 
   loadPaymentList = () => {
-    Axios.get(`${API_URL}/transaction?_expand=user`, {
-      params: {
-        status: "Waiting for confirmation",
-      },
-    })
+    Axios.get(`${API_URL}/transaction?_expand=user`)
       .then((res) => {
         this.setState({
           paymentList: res.data,
@@ -51,7 +47,7 @@ class Payment extends React.Component {
   render() {
     return (
       <div className="container">
-        <h2 className="text-center">Payment List</h2>
+        <h2 className="text-center">Paid Transaction List</h2>
         <table className="dashboard-table mt-5">
           <thead>
             <th>Transaction Id</th>

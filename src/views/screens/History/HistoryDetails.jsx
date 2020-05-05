@@ -102,13 +102,12 @@ class HistoryDetails extends React.Component {
       const { productId, productName, price, quantity } = val;
       let image = "";
       let desc = "";
-      for (let i = 0; this.state.productList.length; i++) {
-        if (this.state.productList[i].id === productId) {
-          image = this.state.productList[i].image;
-          desc = this.state.productList[i].desc;
-          break;
+      this.state.productList.map((val) => {
+        if (val.id === productId) {
+          image = val.image;
+          desc = val.desc;
         }
-      }
+      });
       return (
         <tr>
           <td>

@@ -39,39 +39,19 @@ class History extends React.Component {
   renderTransactionList = () => {
     return this.state.transactionList.map((val) => {
       const { id, purchaseDate, confirmationDate, status } = val;
-      if (this.state.category != "") {
-        if (this.state.category === status) {
-          return (
-            <tr className="text-center">
-              <td>{id}</td>
-              <td>{purchaseDate}</td>
-              <td>{confirmationDate != "" ? confirmationDate : "-"}</td>
-              <td>{status}</td>
-              <td>
-                <Link to={`/history/detail/${id}`}>
-                  <ButtonUI type="textual">details</ButtonUI>
-                </Link>
-              </td>
-            </tr>
-          );
-        }
-      } else {
-        if (status != "unpaid") {
-          return (
-            <tr className="text-center">
-              <td>{id}</td>
-              <td>{purchaseDate}</td>
-              <td>{confirmationDate != "" ? confirmationDate : "-"}</td>
-              <td>{status}</td>
-              <td>
-                <Link to={`/history/detail/${id}`}>
-                  <ButtonUI type="textual">details</ButtonUI>
-                </Link>
-              </td>
-            </tr>
-          );
-        }
-      }
+      return (
+        <tr className="text-center">
+          <td>{id}</td>
+          <td>{purchaseDate}</td>
+          <td>{confirmationDate != "" ? confirmationDate : "-"}</td>
+          <td>{status}</td>
+          <td>
+            <Link to={`/history/detail/${id}`}>
+              <ButtonUI type="textual">details</ButtonUI>
+            </Link>
+          </td>
+        </tr>
+      );
     });
   };
 
@@ -79,28 +59,7 @@ class History extends React.Component {
     return (
       <div className="container text-center  pt-4">
         <h1>History</h1>
-        <div className="d-flex justify-content-center flex-row align-items-center mt-3">
-          <Link to="/history" style={{ color: "inherit" }}>
-            <h6
-              onClick={() => {
-                this.setCategory("unpaid");
-              }}
-              className="mx-4 font-weight-bold"
-            >
-              Unpaid
-            </h6>
-          </Link>
-          <Link to="/history" style={{ color: "inherit" }}>
-            <h6
-              onClick={() => {
-                this.setCategory("");
-              }}
-              className="mx-4 font-weight-bold"
-            >
-              paid
-            </h6>
-          </Link>
-        </div>
+
         <table className="table table-hover">
           <thead>
             <th>Transaction Id</th>

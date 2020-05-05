@@ -201,6 +201,75 @@
         }
       ],
       "id": 6
+    },
+    {
+      "userId": 1,
+      "status": "Waiting for confirmation",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 5100000,
+      "delivery": "Instant",
+      "itemList": [
+        {
+          "productId": 1,
+          "productName": "iPhone 7 +",
+          "quantity": 1,
+          "price": 5000000
+        }
+      ],
+      "id": 7
+    },
+    {
+      "userId": 1,
+      "status": "unpaid",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 0,
+      "delivery": "Instant",
+      "itemList": [
+        {
+          "productId": 1,
+          "productName": "iPhone 7 +",
+          "quantity": 1,
+          "price": 5000000
+        },
+        {
+          "productId": 2,
+          "productName": "iPad Pro 3",
+          "quantity": 1,
+          "price": 15000000
+        }
+      ],
+      "id": 8
+    },
+    {
+      "userId": 1,
+      "status": "unpaid",
+      "purchaseDate": "05/05/2020",
+      "confirmationDate": "",
+      "totalPayment": 0,
+      "delivery": "Economy",
+      "itemList": [
+        {
+          "productId": 4,
+          "productName": "Xiaomi Redmi Note 7",
+          "quantity": 1,
+          "price": 2150000
+        },
+        {
+          "productId": 5,
+          "productName": "iMac",
+          "quantity": 1,
+          "price": 34600000
+        },
+        {
+          "productId": 6,
+          "productName": "Blackberry Gemini",
+          "quantity": 1,
+          "price": 200000
+        }
+      ],
+      "id": 9
     }
   ]
 }
